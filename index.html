@@ -3,17 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>내 첫 웹페이지</title>
+  <title>박창수 | 사진 블로그</title>
+  <meta name="description" content="박창수의 개인 사진 블로그" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="card">
-    <h1>🚀 배포 성공!</h1>
-    <p>이 페이지는 <strong>VSCode → GitHub → Cloudflare</strong>로 자동 배포되었습니다.</p>
-    <button id="btn">클릭해보기</button>
-    <p id="count" class="count"></p>
-    <footer>수정하고 <code>git push</code> 하면 몇 초 뒤 자동으로 반영돼요.</footer>
+  <header class="site-header">
+    <img class="avatar" src="images/profile.svg" alt="박창수 프로필 사진" />
+    <h1>박창수</h1>
+    <p class="tagline">사진 블로그 · 일상의 순간들</p>
+  </header>
+
+  <main>
+    <!-- 사진 카드들이 여기에 자동으로 채워집니다 (script.js의 posts 목록) -->
+    <section id="gallery" class="gallery" aria-label="사진 목록"></section>
+    <p id="empty" class="empty" hidden>아직 올린 사진이 없어요. images 폴더에 사진을 넣고 script.js에 추가해보세요.</p>
   </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> 박창수</p>
+  </footer>
+
+  <!-- 사진 크게 보기 (라이트박스) -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button class="lightbox-close" aria-label="닫기">&times;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <p class="lightbox-caption"></p>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

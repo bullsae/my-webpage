@@ -1,0 +1,8 @@
+📸 이 폴더(images)에 사진을 넣으세요.
+
+1. 내 사진 파일(예: jeju.jpg)을 이 images 폴더 안에 복사해 넣습니다.
+2. 프로필 사진을 바꾸려면 profile.svg 대신 내 사진을 넣고,
+   index.html 에서 images/profile.svg 부분을 내 파일 이름으로 바꾸면 됩니다.
+3. 갤러리에 사진을 추가하려면 script.js 파일 위쪽 posts 목록을 수정하세요.
+
+예시 사진(sample1.svg 등)은 나중에 지워도 됩니다.

@@ -10,7 +10,13 @@
       "Bash(git init *)",
       "Bash(git config *)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git ls-remote *)",
+      "Bash(git rm *)",
+      "WebFetch(domain:bullsae-webpage.pages.dev)",
+      "WebFetch(domain:my-webpage-6o5.pages.dev)"
     ]
   }
 }

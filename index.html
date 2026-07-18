@@ -3,36 +3,53 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>박창수 | 사진 블로그</title>
-  <meta name="description" content="박창수의 개인 사진 블로그" />
-  <link rel="stylesheet" href="style.css" />
+  <title>무료 계산기 모음 | 연봉·퇴직금·실업급여·대출·평수</title>
+  <meta name="description" content="연봉 실수령액, 퇴직금, 실업급여, 대출이자, 평수 변환 등 실생활에 꼭 필요한 무료 계산기를 한곳에 모았습니다." />
+  <link rel="stylesheet" href="tools.css" />
 </head>
 <body>
-  <header class="site-header">
-    <img class="avatar" src="images/profile.svg" alt="박창수 프로필 사진" />
-    <h1>박창수</h1>
-    <p class="tagline">사진 블로그 · 일상의 순간들</p>
-  </header>
+  <div class="wrap">
+    <header class="page">
+      <h1>🧮 생활 계산기 모음</h1>
+      <p>연봉·퇴직금·실업급여·대출·평수까지, 필요한 계산을 한곳에서</p>
+    </header>
 
-  <div class="banner">전호상 땡큐 베리마치</div>
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
 
-  <main>
-    <!-- 사진 카드들이 여기에 자동으로 채워집니다 (script.js의 posts 목록) -->
-    <section id="gallery" class="gallery" aria-label="사진 목록"></section>
-    <p id="empty" class="empty" hidden>아직 올린 사진이 없어요. images 폴더에 사진을 넣고 script.js에 추가해보세요.</p>
-  </main>
+    <div class="tool-grid">
+      <a class="tool-card" href="salary.html">
+        <div class="emoji">💰</div>
+        <h2>연봉 실수령액 계산기</h2>
+        <p>세전 연봉으로 세후 월급(실수령액)을 계산</p>
+      </a>
+      <a class="tool-card" href="toejik.html">
+        <div class="emoji">🧾</div>
+        <h2>퇴직금 계산기</h2>
+        <p>입사일·퇴사일·평균임금으로 퇴직금 예상</p>
+      </a>
+      <a class="tool-card" href="sileop.html">
+        <div class="emoji">💸</div>
+        <h2>실업급여 계산기</h2>
+        <p>구직급여 1일 지급액과 총 수령액 예상</p>
+      </a>
+      <a class="tool-card" href="loan.html">
+        <div class="emoji">🏦</div>
+        <h2>대출이자 계산기</h2>
+        <p>원리금·원금균등 월 상환액과 총이자 계산</p>
+      </a>
+      <a class="tool-card" href="pyeong.html">
+        <div class="emoji">📐</div>
+        <h2>평수 ↔ ㎡ 변환기</h2>
+        <p>평과 제곱미터를 즉시 양방향 변환</p>
+      </a>
+    </div>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> 박창수</p>
-  </footer>
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
 
-  <!-- 사진 크게 보기 (라이트박스) -->
-  <div id="lightbox" class="lightbox" hidden>
-    <button class="lightbox-close" aria-label="닫기">&times;</button>
-    <img class="lightbox-img" src="" alt="" />
-    <p class="lightbox-caption"></p>
+    <footer class="page">
+      <p>© <span id="y"></span> 생활 계산기 모음 · <a href="blog.html">박창수 블로그</a></p>
+    </footer>
   </div>
-
-  <script src="script.js"></script>
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>

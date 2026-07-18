@@ -14,22 +14,10 @@
 
 const posts = [
   {
-    photo: "images/sample1.svg",   // ← images 폴더의 사진 파일 이름
-    title: "첫 번째 사진",           // ← 사진 제목
-    date: "2026.07.18",             // ← 날짜
-    text: "여기에 사진에 대한 이야기를 적어보세요."  // ← 설명 글
-  },
-  {
-    photo: "images/sample2.svg",
-    title: "두 번째 사진",
-    date: "2026.07.17",
-    text: "이 사진들은 예시예요. images 폴더에 내 사진을 넣고 바꿔보세요."
-  },
-  {
-    photo: "images/sample3.svg",
-    title: "세 번째 사진",
-    date: "2026.07.16",
-    text: "사진을 위에 계속 추가하면 최신순으로 위에 쌓여요."
+    photo: "images/KakaoTalk_20260712_031949754.png",
+    title: "냥냥펀치 준비 완료 🐾",
+    date: "2026.07.12",
+    text: "볼살 꾹 눌렸는데도 앞발 번쩍! 이 표정이 너무 귀여워서 남겨둡니다. 😸"
   }
 ];
 

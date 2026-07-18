@@ -16,7 +16,8 @@
       "Bash(git ls-remote *)",
       "Bash(git rm *)",
       "WebFetch(domain:bullsae-webpage.pages.dev)",
-      "WebFetch(domain:my-webpage-6o5.pages.dev)"
+      "WebFetch(domain:my-webpage-6o5.pages.dev)",
+      "Bash(curl -s -o /dev/null -w \"HTTP상태: %{http_code}  용량: %{size_download} bytes  타입: %{content_type}\\\\n\" \"https://my-webpage-6o5.pages.dev/images/KakaoTalk_20260712_031949754.png\")"
     ]
   }
 }

@@ -46,6 +46,25 @@ body {
   margin-top: 0.35rem;
 }
 
+/* ---------- 중간 배너 ---------- */
+.banner {
+  max-width: 960px;
+  margin: 0 auto 2.5rem;
+  padding: 1.4rem 1.25rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), #8a5f3c);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 480px) {
+  .banner { font-size: 1.2rem; margin: 0 1rem 2rem; }
+}
+
 /* ---------- 갤러리 ---------- */
 main {
   max-width: 960px;

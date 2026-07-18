@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>퇴직금 계산기 2026 | 평균임금 기준 퇴직금 계산</title>
+  <meta name="description" content="입사일·퇴사일과 평균 급여를 입력하면 예상 퇴직금을 바로 계산합니다. 근로기준법 평균임금 기준 무료 퇴직금 계산기." />
+  <link rel="stylesheet" href="tools.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="page">
+      <h1>🧾 퇴직금 계산기</h1>
+      <p>입사일·퇴사일과 평균 급여로 예상 퇴직금을 계산하세요</p>
+    </header>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <div class="card">
+      <div class="field">
+        <label for="join">입사일</label>
+        <div class="input-row"><input id="join" type="date" /></div>
+      </div>
+      <div class="field">
+        <label for="leave">퇴사일 (마지막 근무일 다음날)</label>
+        <div class="input-row"><input id="leave" type="date" /></div>
+      </div>
+      <div class="field">
+        <label for="monthly">퇴직 전 3개월 월 평균 급여 (세전)</label>
+        <div class="input-row">
+          <input id="monthly" type="number" inputmode="numeric" placeholder="예: 300" />
+          <span class="unit">만원</span>
+        </div>
+        <div class="hint">기본급 + 각종 수당 포함한 세전 월급 (만원 단위)</div>
+      </div>
+      <div class="field">
+        <label for="bonus">연간 상여금 (선택)</label>
+        <div class="input-row">
+          <input id="bonus" type="number" inputmode="numeric" value="0" />
+          <span class="unit">만원 / 년</span>
+        </div>
+        <div class="hint">최근 1년간 받은 상여금 총액 (없으면 0)</div>
+      </div>
+
+      <button class="btn" id="calcBtn">퇴직금 계산하기</button>
+
+      <div class="result" id="result" hidden>
+        <div class="headline">
+          <div class="label">예상 퇴직금 (세전)</div>
+          <div class="big" id="severance">0원</div>
+          <div class="sub" id="daysInfo"></div>
+        </div>
+        <table>
+          <tr><th>총 재직일수</th><td id="totalDays">0일</td></tr>
+          <tr><th>1일 평균임금</th><td id="avgWage">0원</td></tr>
+          <tr class="total"><th>예상 퇴직금</th><td class="val" id="severance2">0원</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <p class="disclaimer">
+      ※ 퇴직금 = 1일 평균임금 × 30 × (재직일수 ÷ 365). 1일 평균임금은 퇴직 전 3개월 임금총액을 그 기간의 일수로 나눈 값이며,
+      연간 상여금의 3/12를 더해 계산합니다. 실제 금액은 회사 규정·수당 구성에 따라 다를 수 있는 <b>참고용</b> 결과입니다.
+      1년 미만 근무 시 퇴직금이 발생하지 않습니다.
+    </p>
+    <footer class="page"><p><a href="tools.html">← 계산기 모음으로</a></p></footer>
+  </div>
+
+  <script>
+    const won = (n) => Math.round(n).toLocaleString("ko-KR") + "원";
+    function calc() {
+      const join = new Date(document.getElementById("join").value);
+      const leave = new Date(document.getElementById("leave").value);
+      const monthly = (parseFloat(document.getElementById("monthly").value) || 0) * 10000;
+      const bonus = (parseFloat(document.getElementById("bonus").value) || 0) * 10000;
+      if (isNaN(join) || isNaN(leave)) { alert("입사일과 퇴사일을 입력해주세요."); return; }
+      if (leave <= join) { alert("퇴사일이 입사일보다 뒤여야 합니다."); return; }
+      if (monthly <= 0) { alert("월 평균 급여를 입력해주세요."); return; }
+
+      const days = Math.round((leave - join) / (1000 * 60 * 60 * 24)); // 총 재직일수
+      if (days < 365) {
+        alert("재직 기간이 1년 미만이라 법정 퇴직금이 발생하지 않습니다. (계산은 참고용으로 표시)");
+      }
+      // 3개월 임금총액 (3개월=약 91.25일 가정) + 상여 3/12
+      const threeMonthPay = monthly * 3 + bonus * (3 / 12);
+      const threeMonthDays = 91.25;
+      const avgWage = threeMonthPay / threeMonthDays; // 1일 평균임금
+      const severance = avgWage * 30 * (days / 365);
+
+      document.getElementById("severance").textContent = won(severance);
+      document.getElementById("severance2").textContent = won(severance);
+      const y = Math.floor(days / 365), d = days % 365;
+      document.getElementById("daysInfo").textContent = `재직 ${y}년 ${d}일`;
+      document.getElementById("totalDays").textContent = days.toLocaleString("ko-KR") + "일";
+      document.getElementById("avgWage").textContent = won(avgWage);
+      document.getElementById("result").hidden = false;
+    }
+    document.getElementById("calcBtn").addEventListener("click", calc);
+  </script>
+</body>
+</html>

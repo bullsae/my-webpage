@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>실업급여 계산기 2026 | 구직급여 예상 수령액</title>
+  <meta name="description" content="평균임금·연령·고용보험 가입기간으로 실업급여(구직급여) 1일 지급액과 총 예상 수령액을 계산합니다. 무료 실업급여 계산기." />
+  <link rel="stylesheet" href="tools.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="page">
+      <h1>💸 실업급여 계산기</h1>
+      <p>구직급여 1일 지급액과 총 예상 수령액을 확인하세요</p>
+    </header>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <div class="card">
+      <div class="field">
+        <label for="monthly">퇴직 전 3개월 월 평균 급여 (세전)</label>
+        <div class="input-row">
+          <input id="monthly" type="number" inputmode="numeric" placeholder="예: 300" />
+          <span class="unit">만원</span>
+        </div>
+        <div class="hint">평균임금 계산의 기준이 됩니다 (만원 단위)</div>
+      </div>
+      <div class="field">
+        <label for="age">이직 당시 연령</label>
+        <div class="input-row">
+          <select id="age">
+            <option value="under50">50세 미만</option>
+            <option value="over50">50세 이상 또는 장애인</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="period">고용보험 가입기간 (피보험 단위기간)</label>
+        <div class="input-row">
+          <select id="period">
+            <option value="1">1년 미만</option>
+            <option value="2">1년 이상 ~ 3년 미만</option>
+            <option value="3">3년 이상 ~ 5년 미만</option>
+            <option value="4">5년 이상 ~ 10년 미만</option>
+            <option value="5">10년 이상</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" id="calcBtn">실업급여 계산하기</button>
+
+      <div class="result" id="result" hidden>
+        <div class="headline">
+          <div class="label">예상 총 수령액</div>
+          <div class="big" id="total">0원</div>
+          <div class="sub" id="daysInfo"></div>
+        </div>
+        <table>
+          <tr><th>1일 평균임금</th><td id="avgWage">0원</td></tr>
+          <tr><th>1일 구직급여 (평균임금의 60%)</th><td id="daily">0원</td></tr>
+          <tr><th>소정급여일수</th><td id="days">0일</td></tr>
+          <tr class="total"><th>총 예상 수령액</th><td class="val" id="total2">0원</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <p class="disclaimer">
+      ※ 1일 구직급여 = 평균임금의 60% (2025년 기준 상한 66,000원 / 하한 64,192원 적용).
+      소정급여일수는 연령·고용보험 가입기간에 따라 120~270일입니다. 실제 수급은 이직 사유(자발적 퇴사 등),
+      근로일수 요건 충족 여부에 따라 달라지는 <b>참고용</b> 결과이며, 정확한 내용은
+      <a href="https://www.ei.go.kr" target="_blank" rel="noopener">고용보험 홈페이지</a>에서 확인하세요.
+    </p>
+    <footer class="page"><p><a href="tools.html">← 계산기 모음으로</a></p></footer>
+  </div>
+
+  <script>
+    const won = (n) => Math.round(n).toLocaleString("ko-KR") + "원";
+    const UPPER = 66000;   // 1일 상한액
+    const LOWER = 64192;   // 1일 하한액 (2025 최저임금 10,030 × 0.8 × 8)
+    // 소정급여일수 [가입기간 1~5][연령 under50, over50]
+    const DAYS = {
+      "1": { under50: 120, over50: 120 },
+      "2": { under50: 150, over50: 180 },
+      "3": { under50: 180, over50: 210 },
+      "4": { under50: 210, over50: 240 },
+      "5": { under50: 240, over50: 270 }
+    };
+    function calc() {
+      const monthly = (parseFloat(document.getElementById("monthly").value) || 0) * 10000;
+      const age = document.getElementById("age").value;
+      const period = document.getElementById("period").value;
+      if (monthly <= 0) { alert("월 평균 급여를 입력해주세요."); return; }
+
+      const avgWage = (monthly * 3) / 91.25;      // 1일 평균임금
+      let daily = avgWage * 0.6;                   // 60%
+      daily = Math.min(Math.max(daily, LOWER), UPPER);
+      const payDays = DAYS[period][age];
+      const total = daily * payDays;
+
+      document.getElementById("avgWage").textContent = won(avgWage);
+      document.getElementById("daily").textContent = won(daily);
+      document.getElementById("days").textContent = payDays + "일";
+      document.getElementById("total").textContent = won(total);
+      document.getElementById("total2").textContent = won(total);
+      document.getElementById("daysInfo").textContent = `1일 ${won(daily)} × ${payDays}일`;
+      document.getElementById("result").hidden = false;
+    }
+    document.getElementById("calcBtn").addEventListener("click", calc);
+  </script>
+</body>
+</html>

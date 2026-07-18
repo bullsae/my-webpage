@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>평수 계산기 | 평 ↔ 제곱미터(㎡) 변환기</title>
+  <meta name="description" content="평과 제곱미터(㎡)를 즉시 양방향으로 변환합니다. 아파트 평수 계산, 부동산 면적 변환에 딱. 무료 평수 변환기." />
+  <link rel="stylesheet" href="tools.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="page">
+      <h1>📐 평수 ↔ ㎡ 변환기</h1>
+      <p>한쪽에 숫자를 입력하면 다른 쪽이 자동으로 바뀝니다</p>
+    </header>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <div class="card">
+      <div class="field">
+        <label for="pyeong">평 (坪)</label>
+        <div class="input-row">
+          <input id="pyeong" type="number" inputmode="decimal" placeholder="예: 32" />
+          <span class="unit">평</span>
+        </div>
+      </div>
+
+      <div style="text-align:center; font-size:1.5rem; color:var(--muted); margin:.5rem 0;">⇅</div>
+
+      <div class="field">
+        <label for="meter">제곱미터 (㎡)</label>
+        <div class="input-row">
+          <input id="meter" type="number" inputmode="decimal" placeholder="예: 105.8" />
+          <span class="unit">㎡</span>
+        </div>
+      </div>
+
+      <p class="hint" style="text-align:center; margin-top:1rem;">
+        1평 = 3.305785 ㎡ · 1㎡ = 0.3025평
+      </p>
+    </div>
+
+    <div class="card" style="margin-top:1rem;">
+      <h2 style="font-size:1rem; margin-bottom:.7rem;">자주 쓰는 평수</h2>
+      <table>
+        <tr><th>24평</th><td>79.3 ㎡</td></tr>
+        <tr><th>32평</th><td>105.8 ㎡</td></tr>
+        <tr><th>34평</th><td>112.4 ㎡</td></tr>
+        <tr><th>42평</th><td>138.8 ㎡</td></tr>
+      </table>
+    </div>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <p class="disclaimer">※ 1평 = 400/121 ㎡ (약 3.305785㎡) 기준으로 계산합니다.</p>
+    <footer class="page"><p><a href="tools.html">← 계산기 모음으로</a></p></footer>
+  </div>
+
+  <script>
+    const P2M = 3.3057851;
+    const py = document.getElementById("pyeong");
+    const me = document.getElementById("meter");
+    const round2 = (n) => Math.round(n * 100) / 100;
+    py.addEventListener("input", () => {
+      me.value = py.value === "" ? "" : round2(parseFloat(py.value) * P2M);
+    });
+    me.addEventListener("input", () => {
+      py.value = me.value === "" ? "" : round2(parseFloat(me.value) / P2M);
+    });
+  </script>
+</body>
+</html>

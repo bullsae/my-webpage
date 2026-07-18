@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>대출이자 계산기 | 원리금·원금균등 월 상환액 계산</title>
+  <meta name="description" content="대출금액·이자율·기간을 입력하면 원리금균등/원금균등/만기일시 상환 방식별 월 상환액과 총이자를 계산합니다. 무료 대출이자 계산기." />
+  <link rel="stylesheet" href="tools.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="page">
+      <h1>🏦 대출이자 계산기</h1>
+      <p>월 상환액과 총 이자를 상환방식별로 계산하세요</p>
+    </header>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <div class="card">
+      <div class="field">
+        <label for="amount">대출 금액</label>
+        <div class="input-row">
+          <input id="amount" type="number" inputmode="numeric" placeholder="예: 10000" />
+          <span class="unit">만원</span>
+        </div>
+        <div class="hint">예: 1억원 → 10000 만원</div>
+      </div>
+      <div class="field">
+        <label for="rate">연 이자율</label>
+        <div class="input-row">
+          <input id="rate" type="number" inputmode="decimal" step="0.01" placeholder="예: 4.5" />
+          <span class="unit">%</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="years">대출 기간</label>
+        <div class="input-row">
+          <input id="years" type="number" inputmode="numeric" placeholder="예: 30" />
+          <span class="unit">년</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="method">상환 방식</label>
+        <div class="input-row">
+          <select id="method">
+            <option value="equal">원리금균등 (매달 같은 금액)</option>
+            <option value="principal">원금균등 (원금 균등, 이자 감소)</option>
+            <option value="bullet">만기일시 (매달 이자만, 만기에 원금)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" id="calcBtn">이자 계산하기</button>
+
+      <div class="result" id="result" hidden>
+        <div class="headline">
+          <div class="label" id="mLabel">월 상환액</div>
+          <div class="big" id="monthly">0원</div>
+          <div class="sub" id="mSub"></div>
+        </div>
+        <table>
+          <tr><th>총 대출 원금</th><td id="principal">0원</td></tr>
+          <tr><th>총 이자</th><td id="interest">0원</td></tr>
+          <tr class="total"><th>총 상환액 (원금+이자)</th><td class="val" id="totalPay">0원</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="ad">광고 영역 (애드센스 승인 후 표시)</div>
+
+    <p class="disclaimer">
+      ※ 이자를 매월 복리로 계산한 <b>참고용</b> 결과입니다. 실제 대출은 중도상환수수료, 금리 변동(변동금리),
+      거치기간, 원 단위 절사 방식 등에 따라 달라질 수 있습니다.
+    </p>
+    <footer class="page"><p><a href="tools.html">← 계산기 모음으로</a></p></footer>
+  </div>
+
+  <script>
+    const won = (n) => Math.round(n).toLocaleString("ko-KR") + "원";
+    function calc() {
+      const principal = (parseFloat(document.getElementById("amount").value) || 0) * 10000;
+      const annual = parseFloat(document.getElementById("rate").value) || 0;
+      const years = parseFloat(document.getElementById("years").value) || 0;
+      const method = document.getElementById("method").value;
+      if (principal <= 0 || years <= 0) { alert("대출 금액과 기간을 입력해주세요."); return; }
+
+      const n = Math.round(years * 12);   // 총 개월수
+      const r = annual / 100 / 12;         // 월 이자율
+      let monthlyText, subText, totalInterest;
+
+      if (method === "equal") {
+        // 원리금균등
+        const m = r === 0 ? principal / n : principal * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+        totalInterest = m * n - principal;
+        monthlyText = won(m);
+        subText = `매달 동일하게 ${n}회 상환`;
+        document.getElementById("mLabel").textContent = "월 상환액";
+      } else if (method === "principal") {
+        // 원금균등: 첫 달 상환액이 가장 큼
+        const monthlyPrincipal = principal / n;
+        const firstInterest = principal * r;
+        const first = monthlyPrincipal + firstInterest;
+        const last = monthlyPrincipal + monthlyPrincipal * r;
+        // 총이자 = 원금 × r × (n+1)/2
+        totalInterest = monthlyPrincipal * r * (n * (n + 1) / 2);
+        monthlyText = won(first);
+        subText = `첫 달 ${won(first)} → 마지막 달 ${won(last)} (점점 감소)`;
+        document.getElementById("mLabel").textContent = "첫 달 상환액";
+      } else {
+        // 만기일시
+        const monthlyInterest = principal * r;
+        totalInterest = monthlyInterest * n;
+        monthlyText = won(monthlyInterest);
+        subText = `매달 이자만 → 만기에 원금 ${won(principal)} 상환`;
+        document.getElementById("mLabel").textContent = "월 이자 (원금 제외)";
+      }
+
+      document.getElementById("monthly").textContent = monthlyText;
+      document.getElementById("mSub").textContent = subText;
+      document.getElementById("principal").textContent = won(principal);
+      document.getElementById("interest").textContent = won(totalInterest);
+      document.getElementById("totalPay").textContent = won(principal + totalInterest);
+      document.getElementById("result").hidden = false;
+    }
+    document.getElementById("calcBtn").addEventListener("click", calc);
+  </script>
+</body>
+</html>

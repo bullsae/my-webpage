@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "Bash(python -c \"import json;d=json.load\\(open\\('C:/Users/click/OneDrive/Desktop/AI/.claude/settings.local.json'\\)\\);print\\('OK', len\\(d['permissions']['allow']\\), 'rules'\\)\")",
+      "Bash(node -e \"const d=require\\('C:/Users/click/OneDrive/Desktop/AI/.claude/settings.local.json'\\);console.log\\('OK',d.permissions.allow.length,'rules'\\)\")",
+      "Bash(git --version)",
+      "Bash(gh --version)",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
